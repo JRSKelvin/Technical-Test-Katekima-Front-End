@@ -8,7 +8,7 @@ const searchQuery = ref('')
 const currentPage = ref(1)
 const perPage = ref(10)
 const totalPages = computed(() => Math.ceil(totalDoc.value / perPage.value))
-const { isFetching, data: dataQuery } = useQuery({
+const { isFetching, data: dataQuery, refetch } = useQuery({
   queryKey: ['product'],
   queryFn: async () => {
     const response = await fetch(`https://fakestoreapi.com/products/`)
@@ -51,6 +51,7 @@ const pushToEdit = (id: string) => {
   clearLocalStorage()
 }
 const actionToDelete = (id: string) => {
+  fetch(`https://fakestoreapi.com/products/${id}`, { method: 'DELETE' }).then(() => refetch())
 }
 const handleSearchChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
