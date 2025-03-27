@@ -41,9 +41,7 @@ const pushToDetail = (url: string) => {
   const parts = url.split('/')
   const id = parts[parts.length - 2]
   router.push(`/poke/detail/${id}`)
-  localStorage.removeItem('pokeSearchQuery')
-  localStorage.removeItem('pokeCurrentPage')
-  localStorage.removeItem('pokePerPage')
+  clearLocalStorage()
 }
 const handleCurrentPagePlus = () => {
   const newValue = currentPage.value + 1

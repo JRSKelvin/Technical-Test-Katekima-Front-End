@@ -40,9 +40,17 @@ const clearLocalStorage = () => {
 }
 const pushToDetail = (id: string) => {
   router.push(`/store/detail/${id}`)
-  localStorage.removeItem('storeSearchQuery')
-  localStorage.removeItem('storeCurrentPage')
-  localStorage.removeItem('storePerPage')
+  clearLocalStorage()
+}
+const pushToCreate = () => {
+  router.push(`/store/create`)
+  clearLocalStorage()
+}
+const pushToEdit = (id: string) => {
+  router.push(`/store/edit/${id}`)
+  clearLocalStorage()
+}
+const actionToDelete = (id: string) => {
 }
 const handleSearchChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
@@ -72,7 +80,12 @@ const handlePerPageChange = (event: Event) => {
 <script setup lang="ts"></script>
 <template>
   <main class="flex-1 flex flex-col gap-4">
-    <h1 class="text-3xl font-bold text-gray-800">Store Product</h1>
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-gray-800">Store Product</h1>
+      <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm flex items-center" @click="pushToCreate">
+        Add New
+      </button>
+    </div>
     <div class="mb-4">
       <input v-model="searchQuery" type="text" placeholder="Search" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" @input="handleSearchChange" />
     </div>
@@ -104,6 +117,8 @@ const handlePerPageChange = (event: Event) => {
           <td class="px-6 py-4">{{ item.category }}</td>
           <td class="px-6 py-4">
             <button class="text-blue-600 hover:underline text-sm" @click="() => pushToDetail(item.id)">View</button>
+            <button class="text-blue-600 hover:underline text-sm" @click="() => pushToEdit(item.id)">Edit</button>
+            <button class="text-blue-600 hover:underline text-sm" @click="() => actionToDelete(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
