@@ -18,7 +18,7 @@ const { isFetching, data: dataQuery } = useQuery({
     const response = await fetch(`https://pokeapi.co/api/v2/berry/?${params.toString()}`)
     const data = await response.json()
     totalDoc.value = data?.count
-    data?.results?.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name));
+    data?.results?.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name))
     return data?.results
   },
 })

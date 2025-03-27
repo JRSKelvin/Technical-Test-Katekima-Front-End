@@ -13,7 +13,7 @@ const { isFetching, data: dataQuery } = useQuery({
   queryFn: async () => {
     const response = await fetch(`https://fakestoreapi.com/products/`)
     const data = await response.json()
-    data?.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
+    data?.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title))
     totalDoc.value = data.length
     return data
   },
