@@ -42,7 +42,7 @@ const handleSubmit = async () => {
     }),
   })
   const result = await response.json()
-  console.log("Result", result)
+  console.log('Result', result)
   router.push('/store')
 }
 </script>
