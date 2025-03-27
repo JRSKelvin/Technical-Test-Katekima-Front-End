@@ -17,7 +17,7 @@ const { isFetching, data: dataQuery } = useQuery({
     })
     const response = await fetch(`https://fakestoreapi.com/products/?${params.toString()}`)
     const data = await response.json()
-    console.log("data", data)
+    data?.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
     totalDoc.value = 99999
     return data
   },
