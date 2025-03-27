@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import router from '@/router'
+const { t } = useI18n()
 const route = useRoute()
 const id = route.params.id
 
@@ -55,28 +57,28 @@ const handleSubmit = async () => {
         <div class="h-4 bg-gray-300 rounded w-5/6"></div>
         <div class="h-4 bg-gray-300 rounded w-2/3"></div>
       </div>
-      <span class="ml-2 text-gray-500 text-center w-full">Loading Data</span>
+      <span class="ml-2 text-gray-500 text-center w-full">{{ t('loadingData') }}</span>
     </div>
     <div v-else class="min-w-full text-sm text-left text-gray-600">
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
-          <label class="block mb-1 font-medium">Title</label>
+          <label class="block mb-1 font-medium">{{ t('title') }}</label>
           <input v-model="form.title" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Price</label>
+          <label class="block mb-1 font-medium">{{ t('price') }}</label>
           <input v-model="form.price" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Description</label>
+          <label class="block mb-1 font-medium">{{ t('description') }}</label>
           <input v-model="form.description" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Category</label>
+          <label class="block mb-1 font-medium">{{ t('category') }}</label>
           <input v-model="form.category" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Image (URL)</label>
+          <label class="block mb-1 font-medium">{{ t('image') }} ({{ t('url') }})</label>
           <input v-model="form.image" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

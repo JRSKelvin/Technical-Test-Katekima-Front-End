@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import router from '@/router'
+const { t } = useI18n()
 
 const form = ref({
   title: '',
@@ -34,23 +36,23 @@ const handleSubmit = async () => {
     <div class="min-w-full text-sm text-left text-gray-600">
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
-          <label class="block mb-1 font-medium">Title</label>
+          <label class="block mb-1 font-medium">{{ t('title') }}</label>
           <input v-model="form.title" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Price</label>
+          <label class="block mb-1 font-medium">{{ t('price') }}</label>
           <input v-model="form.price" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Description</label>
+          <label class="block mb-1 font-medium">{{ t('description') }}</label>
           <input v-model="form.description" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Category</label>
+          <label class="block mb-1 font-medium">{{ t('category') }}</label>
           <input v-model="form.category" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
-          <label class="block mb-1 font-medium">Image (URL)</label>
+          <label class="block mb-1 font-medium">{{ t('image') }} ({{ t('url') }})</label>
           <input v-model="form.image" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

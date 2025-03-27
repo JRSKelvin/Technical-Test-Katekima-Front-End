@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
+import { useI18n } from 'vue-i18n'
 import router from '@/router'
+const { t } = useI18n()
 const data = ref([])
 const totalDoc = ref(0)
 const searchQuery = ref('')
@@ -73,15 +75,15 @@ const handlePerPageChange = (event: Event) => {
         <div class="h-4 bg-gray-300 rounded w-full"></div>
         <div class="h-4 bg-gray-300 rounded w-full"></div>
       </div>
-      <span class="ml-2 text-gray-500 text-center w-full">Loading Data</span>
+      <span class="ml-2 text-gray-500 text-center w-full">{{ t('loadingData') }}</span>
     </div>
     <table v-else class="min-w-full text-sm text-left text-gray-600">
       <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
         <tr>
           <th scope="col" class="px-6 py-4">#</th>
-          <th scope="col" class="px-6 py-4">Name</th>
-          <th scope="col" class="px-6 py-4">URL</th>
-          <th scope="col" class="px-6 py-4">Action</th>
+          <th scope="col" class="px-6 py-4">{{ t('name') }}</th>
+          <th scope="col" class="px-6 py-4">{{ t('url') }}</th>
+          <th scope="col" class="px-6 py-4">{{ t('action') }}</th>
         </tr>
       </thead>
       <tbody>
