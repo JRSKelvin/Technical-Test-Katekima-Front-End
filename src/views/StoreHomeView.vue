@@ -24,7 +24,7 @@ onMounted(() => {
   perPage.value = parseInt(localStorage.getItem('storePerPage') || '10')
   data.value = dataQuery?.value
 })
-watch([dataQuery, searchQuery, currentPage, perPage], (newValue) => {
+watch([dataQuery, searchQuery, currentPage, perPage], () => {
   const filtered = dataQuery?.value?.filter((item: { title: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.title) : true)
   if (filtered) {
     totalDoc.value = filtered.length
@@ -78,7 +78,6 @@ const handlePerPageChange = (event: Event) => {
   localStorage.setItem('storePerPage', target.value)
 }
 </script>
-<script setup lang="ts"></script>
 <template>
   <main class="flex-1 flex flex-col gap-4">
     <div class="flex justify-between items-center">

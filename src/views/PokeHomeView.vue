@@ -61,7 +61,6 @@ const handlePerPageChange = (event: Event) => {
   localStorage.setItem('pokePerPage', target.value)
 }
 </script>
-<script setup lang="ts"></script>
 <template>
   <main class="flex-1 flex flex-col gap-4">
     <h1 class="text-3xl font-bold text-gray-800">Poke Berry</h1>

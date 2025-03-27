@@ -21,7 +21,6 @@ watch(dataQuery, (newValue) => {
   data.value = newValue
 })
 </script>
-<script setup lang="ts"></script>
 <template>
   <main class="flex-1 flex flex-col gap-4">
     <h1 class="text-3xl font-bold text-gray-800">Poke Berry Detail (ID: {{ id }})</h1>
