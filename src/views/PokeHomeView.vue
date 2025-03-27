@@ -34,9 +34,6 @@ watch(searchQuery, (newValue) => {
   localStorage.setItem('pokeSearchQuery', newValue)
   data.value = dataQuery?.value?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
 })
-watch(perPage, (newValue) => {
-  localStorage.setItem('pokePerPage', newValue.toString())
-})
 const pushToDetail = (url: string) => {
   const parts = url.split('/')
   const id = parts[parts.length - 2]
@@ -57,8 +54,10 @@ const handleCurrentPageMinus = () => {
 }
 const handlePerPageChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
+  currentPage.value = 1
   perPage.value = parseInt(target.value) || 10
   localStorage.setItem('pokeCurrentPage', '1')
+  localStorage.setItem('pokePerPage', target.value)
 }
 </script>
 <script setup lang="ts"></script>

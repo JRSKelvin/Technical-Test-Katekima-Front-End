@@ -35,9 +35,6 @@ watch(searchQuery, (newValue) => {
   localStorage.setItem('storeSearchQuery', newValue)
   data.value = dataQuery?.value?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
 })
-watch(perPage, (newValue) => {
-  localStorage.setItem('storePerPage', newValue.toString())
-})
 const pushToDetail = (id: string) => {
   router.push(`/store/detail/${id}`)
   localStorage.removeItem('storeSearchQuery')
@@ -56,8 +53,10 @@ const handleCurrentPageMinus = () => {
 }
 const handlePerPageChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
+  currentPage.value = 1
   perPage.value = parseInt(target.value) || 10
   localStorage.setItem('storeCurrentPage', '1')
+  localStorage.setItem('storePerPage', target.value)
 }
 </script>
 <script setup lang="ts"></script>
