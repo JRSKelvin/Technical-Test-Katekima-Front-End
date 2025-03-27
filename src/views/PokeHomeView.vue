@@ -28,13 +28,15 @@ onMounted(() => {
   perPage.value = parseInt(localStorage.getItem('pokePerPage') || '10')
   data.value = dataQuery?.value
 })
-watch(dataQuery, (newValue) => {
-  data.value = newValue?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
-})
-watch(searchQuery, (newValue) => {
-  localStorage.setItem('pokeSearchQuery', newValue)
+watch([dataQuery, searchQuery], (newValue) => {
+  localStorage.setItem('pokeSearchQuery', newValue[1])
   data.value = dataQuery?.value?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
 })
+const clearLocalStorage = () => {
+  localStorage.removeItem('pokeSearchQuery')
+  localStorage.removeItem('pokeCurrentPage')
+  localStorage.removeItem('pokePerPage')
+}
 const pushToDetail = (url: string) => {
   const parts = url.split('/')
   const id = parts[parts.length - 2]

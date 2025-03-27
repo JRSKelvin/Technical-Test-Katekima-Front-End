@@ -9,16 +9,12 @@ const currentPage = ref(1)
 const perPage = ref(10)
 const totalPages = computed(() => Math.ceil(totalDoc.value / perPage.value))
 const { isFetching, data: dataQuery } = useQuery({
-  queryKey: ['berry', currentPage, perPage],
+  queryKey: ['product'],
   queryFn: async () => {
-    const params = new URLSearchParams({
-      limit: localStorage.getItem('storePerPage') || perPage.value.toString(),
-      offset: (perPage.value * (currentPage.value - 1)).toString(),
-    })
-    const response = await fetch(`https://fakestoreapi.com/products/?${params.toString()}`)
+    const response = await fetch(`https://fakestoreapi.com/products/`)
     const data = await response.json()
     data?.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
-    totalDoc.value = 99999
+    totalDoc.value = data.length
     return data
   },
 })
@@ -28,18 +24,32 @@ onMounted(() => {
   perPage.value = parseInt(localStorage.getItem('storePerPage') || '10')
   data.value = dataQuery?.value
 })
-watch(dataQuery, (newValue) => {
-  data.value = newValue?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
+watch([dataQuery, searchQuery, currentPage, perPage], (newValue) => {
+  const filtered = dataQuery?.value?.filter((item: { title: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.title) : true)
+  if (filtered) {
+    totalDoc.value = filtered.length
+    const start = (currentPage.value - 1) * perPage.value
+    const end = currentPage.value * perPage.value
+    data.value = filtered.slice(start, end)
+  }
 })
-watch(searchQuery, (newValue) => {
-  localStorage.setItem('storeSearchQuery', newValue)
-  data.value = dataQuery?.value?.filter((item: { name: string }) => searchQuery.value ? new RegExp(searchQuery.value, 'i').test(item.name) : true)
-})
+const clearLocalStorage = () => {
+  localStorage.removeItem('storeSearchQuery')
+  localStorage.removeItem('storeCurrentPage')
+  localStorage.removeItem('storePerPage')
+}
 const pushToDetail = (id: string) => {
   router.push(`/store/detail/${id}`)
   localStorage.removeItem('storeSearchQuery')
   localStorage.removeItem('storeCurrentPage')
   localStorage.removeItem('storePerPage')
+}
+const handleSearchChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement
+  searchQuery.value = target.value
+  currentPage.value = 1
+  localStorage.setItem('storeSearchQuery', target.value)
+  localStorage.setItem('storeCurrentPage', '1')
 }
 const handleCurrentPagePlus = () => {
   const newValue = currentPage.value + 1
@@ -64,7 +74,7 @@ const handlePerPageChange = (event: Event) => {
   <main class="flex-1 flex flex-col gap-4">
     <h1 class="text-3xl font-bold text-gray-800">Store Product</h1>
     <div class="mb-4">
-      <input v-model="searchQuery" type="text" placeholder="Search" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+      <input v-model="searchQuery" type="text" placeholder="Search" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" @input="handleSearchChange" />
     </div>
     <div v-if="isFetching" class="flex-1 flex flex-col">
       <div class="animate-pulse space-y-4 p-4">
